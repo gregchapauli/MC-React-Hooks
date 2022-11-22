@@ -1,27 +1,34 @@
-import { /*useEffect,*/ useState } from "react";
+import { useEffect, useState } from "react";
 import PlayerDetails from "./PlayerDetails";
 
 function ApiSearch() {
-  const [inputName, setInputName] = useState("");
-  //   useEffect(() => {
-  //     if (inputName.target.value !== "") {
-  //       return <div>Super, j'ai trouvé ça pour toi :</div>;
-  //     }
-  //   });
+  const [inputName, setInputName] = useState();
+  // const [error, setError] = useState("");
+  const nameArr = [];
 
-  const url = "https://stats.nba.com/stats/commonplayerinfo";
+  useEffect(() => {
+    if (!inputName) {
+      return;
+    }
+    fetch("https://www.balldontlie.io/api/v1/players")
+      .then((response) => response.json())
+      .then((json) => {
+        for (let i = 0; i < json.data.length; i++) {
+          nameArr.push(json.data[i].first_name);
+          console.log(nameArr);
+        }
+      });
+    // .catch(error => setError(error))
+  }, [inputName]);
 
   const handleChange = (inputName) => {
     setInputName(inputName);
-    inputName = inputName.target.value;
   };
 
   const handleClick = () => {
-    console.log(inputName.target.value);
-    //consulter l'API avec la valeur entrée
-    fetch(url).then((playerID) => {
-      console.log(playerID);
-    });
+    if (inputName.target.value === nameArr) {
+      console.log(nameArr);
+    } else return "no match found";
   };
 
   return (
