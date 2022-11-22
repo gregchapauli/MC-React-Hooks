@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import PlayerDetails from "./PlayerDetails";
 
 function ApiSearch() {
   const [inputName, setInputName] = useState();
@@ -26,8 +25,11 @@ function ApiSearch() {
   };
 
   const handleClick = () => {
-    if (inputName.target.value === nameArr) {
-      console.log(nameArr);
+    const nameFound = nameArr.find(
+      (element) => element === inputName.target.value
+    );
+    if (nameFound) {
+      console.log(nameFound);
     } else return "no match found";
   };
 
@@ -38,7 +40,6 @@ function ApiSearch() {
       <input type="text" id="name" required onChange={handleChange}></input>
       <br />
       <button onClick={handleClick}>Rechercher</button>
-      <PlayerDetails inputName={inputName} />
     </div>
   );
 }
