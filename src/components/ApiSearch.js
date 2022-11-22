@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function ApiSearch() {
   const [inputName, setInputName] = useState();
-  // const [error, setError] = useState("");
+  const [error, setError] = useState("");
   const nameArr = [];
 
   useEffect(() => {
@@ -16,8 +16,8 @@ function ApiSearch() {
           nameArr.push(json.data[i].first_name);
           console.log(nameArr);
         }
-      });
-    // .catch(error => setError(error))
+      })
+      .catch((error) => setError(error));
   }, [inputName]);
 
   const handleChange = (inputName) => {
@@ -30,7 +30,9 @@ function ApiSearch() {
     );
     if (nameFound) {
       console.log(nameFound);
-    } else return "no match found";
+    } else {
+      return console.log("no match found");
+    }
   };
 
   return (
